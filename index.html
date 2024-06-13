@@ -93,6 +93,46 @@
       }
     });
 
+    // Define points that form a square
+    const points = [
+      { longitude: -70.6483, latitude: -33.4372, label: "Punto 1" },
+      { longitude: -70.6483, latitude: -33.4362, label: "Punto 2" },
+      { longitude: -70.6473, latitude: -33.4362, label: "Punto 3" },
+      { longitude: -70.6473, latitude: -33.4372, label: "Punto 4" },
+    ];
+
+    // Add points to the viewer
+    points.forEach(point => {
+      viewer.entities.add({
+        position: Cesium.Cartesian3.fromDegrees(point.longitude, point.latitude),
+        point: {
+          pixelSize: 10,
+          color: Cesium.Color.RED,
+        },
+        label: {
+          text: point.label,
+          font: '14pt sans-serif',
+          style: Cesium.LabelStyle.FILL_AND_OUTLINE,
+          outlineWidth: 2,
+          verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+          pixelOffset: new Cesium.Cartesian2(0, -9),
+        }
+      });
+    });
+
+    // Define the polygon using the points
+    viewer.entities.add({
+      polygon: {
+        hierarchy: Cesium.Cartesian3.fromDegreesArray([
+          -70.6483, -33.4372,
+          -70.6483, -33.4362,
+          -70.6473, -33.4362,
+          -70.6473, -33.4372,
+        ]),
+        material: Cesium.Color.RED.withAlpha(0.5),
+      }
+    });
+
     // Add Cesium OSM Buildings, a global 3D buildings layer.
     // const buildingTileset = await Cesium.createOsmBuildingsAsync();
     // viewer.scene.primitives.add(buildingTileset);
