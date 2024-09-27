@@ -1,18 +1,22 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8">
-  <!-- Include the CesiumJS JavaScript and CSS files -->
+  <!-- Incluye los archivos JavaScript y CSS de CesiumJS -->
   <script src="https://cesium.com/downloads/cesiumjs/releases/1.117/Build/Cesium/Cesium.js"></script>
   <link href="https://cesium.com/downloads/cesiumjs/releases/1.117/Build/Cesium/Widgets/widgets.css" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
+  <!-- Incluye los estilos de Bootstrap -->
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
     integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+  <!-- Tu archivo CSS personalizado (opcional) -->
+  <link rel="stylesheet" href="style.css">
+  <title>Proyecto CesiumJS</title>
 </head>
 
 <body>
 
+  <!-- Barra de navegación -->
   <nav class="navbar navbar-expand-lg navbar-light bg-transparent fixed-top">
     <div class="container-fluid">
       <a class="navbar-brand" href="#">PROPERTWIN</a>
@@ -33,112 +37,38 @@
     </div>
   </nav>
 
+  <!-- Contenedor de Cesium -->
   <main class="container-cesium">
     <div id="cesiumContainer"></div>
   </main>
 
-  <!-- Modal de Bootstrap para mostrar información al hacer clic en el ícono -->
+  <!-- Modal para mostrar información de la propiedad -->
   <div class="modal fade" id="infoModal" tabindex="-1" aria-labelledby="infoModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="infoModalLabel">Información del marcador</h5>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          <h5 class="modal-title" id="infoModalLabel">Título de la Propiedad</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
         </div>
         <div class="modal-body">
-          <!-- Aquí irá la información que deseas mostrar -->
-          <p>Este es un marcador clickeable en el mapa. Aquí puedes agregar más información o detalles.</p>
+          <div id="modal-body-content">
+            <!-- Aquí se insertará el contenido dinámico -->
+          </div>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
         </div>
       </div>
     </div>
+  </div>
 
-    <script type="module">
-      // Your access token can be found at: https://ion.cesium.com/tokens.
-      // Replace `your_access_token` with your Cesium ion access token.
-      Cesium.Ion.defaultAccessToken = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3OWM4ZDZkZC1kNGJiLTQ0ZmYtYWY5YS0yOTkxYmMwZWEzNzgiLCJpZCI6MTQzMzQ5LCJpYXQiOjE2ODU1ODMyNTF9.XCbRaWuxPduSbJV50pLfEs8hW9BQbvnIgvFWlgu0llE';
 
-      // Create an async function to use await properly
-      async function initializeCesium() {
-        // Initialize the Cesium Viewer in the HTML element with the `cesiumContainer` ID.
-        const viewer = new Cesium.Viewer('cesiumContainer', {
-          timeline: false,
-          animation: false,
-          sceneModePicker: false,
-          baseLayerPicker: false,
-          globe: false,
-        });
+  <script src="app.js"></script>
 
-        // Enable rendering the sky
-        viewer.scene.skyAtmosphere.show = true;
-
-        // Add Photorealistic 3D Tiles
-        try {
-          const tileset = await Cesium.createGooglePhotorealistic3DTileset();
-          viewer.scene.primitives.add(tileset);
-        } catch (error) {
-          console.log(`Error loading Photorealistic 3D Tiles tileset: ${error}`);
-        }
-
-        // Fly the camera to a specific location (Santiago, Chile)
-        viewer.camera.flyTo({
-          destination: Cesium.Cartesian3.fromDegrees(-70.6483, -33.4372, 400),
-          orientation: {
-            heading: Cesium.Math.toRadians(0.0),
-            pitch: Cesium.Math.toRadians(-15.0),
-          }
-        });
-
-        // Define points that form a square
-        const points = [
-          { longitude: -70.6483, latitude: -33.4372, label: "Punto 1" },
-          { longitude: -70.6483, latitude: -33.4362, label: "Punto 2" },
-          { longitude: -70.6473, latitude: -33.4362, label: "Punto 3" },
-          { longitude: -70.6473, latitude: -33.4372, label: "Punto 4" },
-        ];
-
-        // Add points to the viewer
-        points.forEach(point => {
-          viewer.entities.add({
-            position: Cesium.Cartesian3.fromDegrees(point.longitude, point.latitude),
-            point: {
-              pixelSize: 10,
-              color: Cesium.Color.RED,
-            },
-            label: {
-              text: point.label,
-              font: '14pt sans-serif',
-              style: Cesium.LabelStyle.FILL_AND_OUTLINE,
-              outlineWidth: 2,
-              verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-              pixelOffset: new Cesium.Cartesian2(0, -9),
-            }
-          });
-        });
-
-        // Define the polygon using the points
-        viewer.entities.add({
-          polygon: {
-            hierarchy: Cesium.Cartesian3.fromDegreesArray([
-              -70.6483, -33.4372,
-              -70.6483, -33.4362,
-              -70.6473, -33.4362,
-              -70.6473, -33.4372,
-            ]),
-            material: Cesium.Color.RED.withAlpha(0.5),
-          }
-        });
-      }
-
-      // Call the async function to initialize Cesium
-      initializeCesium();
-    </script>
-
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"></script>
+  <!-- Script de Bootstrap -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+    crossorigin="anonymous"></script>
 
 </body>
 
