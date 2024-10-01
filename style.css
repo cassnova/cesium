@@ -27,3 +27,49 @@ html {
   z-index: 1100;
   /* Superior al z-index del navbar (1000) */
 }
+
+.carousel-item img {
+  max-width: 100%;
+  max-height: 300px;
+  object-fit: contain; /* Ajustar la imagen dentro de las dimensiones */
+  margin: 0 auto;
+  display: block;
+}
+
+.modal-dialog {
+  max-width: 800px; /* Puedes ajustar el ancho máximo */
+  margin: 1.75rem auto; /* Centrar el modal verticalmente */
+}
+
+.modal-content {
+  max-height: 70vh; /* 80% de la altura de la ventana */
+  overflow-y: auto; /* Habilitar el scroll vertical si es necesario */
+}
+
+/* Cambiar el color de las flechas del carrusel a negro */
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+  background-image: none; /* Eliminar la imagen de fondo predeterminada */
+  width: 30px;
+  height: 30px;
+}
+
+.carousel-control-prev-icon::after,
+.carousel-control-next-icon::after {
+  content: ''; /* Remover cualquier contenido existente */
+  display: inline-block;
+  width: 100%;
+  height: 100%;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+/* Flecha izquierda */
+.carousel-control-prev-icon::after { 
+  background-image: url('data:image/svg+xml;charset=UTF8,%3Csvg xmlns%3D%22http://www.w3.org/2000/svg%22 fill%3D%22black%22 viewBox%3D%220 0 16 16%22%3E%3Cpath d%3D%22M4.646%208l5.5-5.5.708.708L6.062%208l4.792%204.792-.708.708L4.646%208z%22/%3E%3C/svg%3E');
+}
+
+/* Flecha derecha */
+.carousel-control-next-icon::after {
+  background-image: url('data:image/svg+xml;charset=UTF8,%3Csvg xmlns%3D%22http://www.w3.org/2000/svg%22 fill%3D%22black%22 viewBox%3D%220 0 16 16%22%3E%3Cpath d%3D%22M11.354%208l-5.5%205.5-.708-.708L9.938%208%205.146%203.208l.708-.708L11.354%208z%22/%3E%3C/svg%3E');
+}
