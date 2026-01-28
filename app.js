@@ -35,9 +35,9 @@ async function initializeCesium() {
     name: "Terreno Santiago Centro",
     polygon: {
       hierarchy: Cesium.Cartesian3.fromDegreesArrayHeights(terrenoCentro),
-      material: Cesium.Color.RED.withAlpha(0.5),
+      material: Cesium.Color.BLUE.withAlpha(0.5),
       outline: true,
-      outlineColor: Cesium.Color.RED,
+      outlineColor: Cesium.Color.GREEN,
       perPositionHeight: true,
     },
     terreno: {
