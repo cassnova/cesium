@@ -172,7 +172,7 @@ async function initializeCesium() {
       baños: 2,
       area: "120 m²",
       tipo: "Departamento",
-      estado: "En venta",
+      estado: "Arriendo",
     },
 
     {
@@ -194,7 +194,7 @@ async function initializeCesium() {
       baños: 2,
       area: "120 m²",
       tipo: "Departamento",
-      estado: "En venta",
+      estado: "Arriendo",
     },
 
     {
@@ -216,7 +216,7 @@ async function initializeCesium() {
       baños: 2,
       area: "120 m²",
       tipo: "Departamento",
-      estado: "En venta",
+      estado: "Arriendo",
     },
 
     {
@@ -236,7 +236,7 @@ async function initializeCesium() {
       baños: 3,
       area: "180 m²",
       tipo: "Casa",
-      estado: "En arriendo",
+      estado: "Arriendo",
     },
 
     {
@@ -420,9 +420,10 @@ async function initializeCesium() {
         propiedad.altura,
       ),
       billboard: {
-        image: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
-        width: 32,
-        height: 32,
+        image: obtenerIconoPorEstado(propiedad.estado),
+        width: 36,
+        height: 36,
+        verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       },
       id: `propiedad-${propiedad.id}`,
       propiedad: propiedad, // Adjunta la información de la propiedad usando una propiedad personalizada
@@ -564,6 +565,99 @@ async function initializeCesium() {
     const myModal = new bootstrap.Modal(document.getElementById("infoModal"));
     myModal.show();
   }, Cesium.ScreenSpaceEventType.LEFT_CLICK);
+
+  function filtrarPropiedades(categoria) {
+    const entidades = viewer.entities.values;
+
+    entidades.forEach((entidad) => {
+      // 🔹 Propiedades (markers)
+      if (entidad.propiedad) {
+        if (categoria === "inicio") {
+          entidad.show = true;
+        } else {
+          entidad.show = entidad.propiedad.estado.toLowerCase() === categoria;
+        }
+      }
+
+      // 🔹 Terrenos (polígonos)
+      if (entidad.terreno) {
+        if (categoria === "inicio") {
+          entidad.show = true;
+        } else {
+          entidad.show = categoria === "terrenos";
+        }
+      }
+    });
+  }
+
+  function actualizarNavActivo(elemento) {
+    const links = document.querySelectorAll(".nav-link");
+
+    links.forEach((link) => {
+      link.classList.remove("active");
+    });
+
+    elemento.classList.add("active");
+  }
+
+  document
+    .getElementById("filtro-inicio")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      filtrarPropiedades("inicio");
+      actualizarNavActivo(document.getElementById("filtro-inicio"));
+    });
+
+  document
+    .getElementById("filtro-ventas")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      filtrarPropiedades("en venta");
+      actualizarNavActivo(document.getElementById("filtro-ventas"));
+    });
+
+  document
+    .getElementById("filtro-arriendo")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      filtrarPropiedades("arriendo");
+      actualizarNavActivo(document.getElementById("filtro-arriendo"));
+    });
+
+  document
+    .getElementById("filtro-terrenos")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      filtrarPropiedades("terrenos");
+      actualizarNavActivo(document.getElementById("filtro-terrenos"));
+    });
+
+  document
+    .getElementById("filtro-industrial")
+    .addEventListener("click", function (e) {
+      e.preventDefault();
+      filtrarPropiedades("industrial");
+      actualizarNavActivo(document.getElementById("filtro-industrial"));
+    });
+
+  function obtenerIconoPorEstado(estado) {
+    console.log("Estado recibido:", estado);
+    const estadoLower = estado.toLowerCase();
+
+    if (estadoLower === "arriendo") {
+      return "https://cdn-icons-png.flaticon.com/512/684/684909.png"; // verde
+    }
+
+    if (estadoLower === "en venta") {
+      return "https://cdn-icons-png.flaticon.com/512/684/684908.png"; // rojo
+    }
+
+    if (estadoLower === "industrial") {
+      return "https://cdn-icons-png.flaticon.com/512/565/565547.png"; // gris
+    }
+
+    return "https://cdn-icons-png.flaticon.com/512/619/619153.png"; // default
+  }
 }
 
 // Llama a la función para inicializar Cesium
