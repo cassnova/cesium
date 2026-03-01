@@ -417,7 +417,7 @@ async function initializeCesium() {
       position: Cesium.Cartesian3.fromDegrees(
         propiedad.longitud,
         propiedad.latitud,
-        propiedad.altura
+        propiedad.altura,
       ),
       billboard: {
         image: "https://cdn-icons-png.flaticon.com/512/684/684908.png",
@@ -447,37 +447,75 @@ async function initializeCesium() {
       if (propiedad.imagenes && propiedad.imagenes.length > 0) {
         propiedad.imagenes.forEach((imagen, index) => {
           carouselContent += `
-          <div class="carousel-item ${index === 0 ? "active" : ""}">
-            <img src="${imagen}" class="d-block mx-auto" alt="${
-            propiedad.nombre
-          }">
-          </div>
-        `;
+        <div class="carousel-item ${index === 0 ? "active" : ""}">
+          <img src="${imagen}" alt="${propiedad.nombre}">
+        </div>
+      `;
         });
+      } else {
+        carouselContent = `
+      <div class="carousel-item active">
+        <img src="https://via.placeholder.com/900x500?text=Sin+Imagen">
+      </div>
+    `;
       }
 
       document.getElementById("infoModalLabel").innerText = propiedad.nombre;
-      document.getElementById("modal-body-content").innerHTML = `
-      <p><strong>Precio:</strong> ${propiedad.precio}</p>
-      <p><strong>Habitaciones:</strong> ${propiedad.habitaciones}</p>
-      <p><strong>Baños:</strong> ${propiedad.baños}</p>
-      <p><strong>Área:</strong> ${propiedad.area}</p>
-      <p><strong>Tipo:</strong> ${propiedad.tipo}</p>
-      <p><strong>Estado:</strong> ${propiedad.estado}</p>
-      <p>${propiedad.descripcion}</p>
 
-      <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
-        <div class="carousel-inner">
-          ${carouselContent}
+      document.getElementById("modal-body-content").innerHTML = `
+    <div class="modal-layout">
+
+      <div class="modal-images">
+        <div id="${carouselId}" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            ${carouselContent}
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
         </div>
-        <button class="carousel-control-prev" type="button" data-bs-target="#${carouselId}" data-bs-slide="prev">
-          <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#${carouselId}" data-bs-slide="next">
-          <span class="carousel-control-next-icon"></span>
-        </button>
       </div>
-    `;
+
+      <div class="modal-info">
+
+  <div class="precio-destacado">${propiedad.precio}</div>
+
+  <div class="info-grid">
+    <div class="info-item">
+      <i class="bi bi-door-open"></i>
+      <span>${propiedad.habitaciones} Habitaciones</span>
+    </div>
+
+    <div class="info-item">
+      <i class="bi bi-droplet"></i>
+      <span>${propiedad.baños} Baños</span>
+    </div>
+
+    <div class="info-item">
+      <i class="bi bi-aspect-ratio"></i>
+      <span>${propiedad.area}</span>
+    </div>
+
+    <div class="info-item">
+      <i class="bi bi-house"></i>
+      <span>${propiedad.tipo}</span>
+    </div>
+
+    <div class="info-item">
+      <i class="bi bi-tag"></i>
+      <span>${propiedad.estado}</span>
+    </div>
+  </div>
+
+  <hr>
+  <p>${propiedad.descripcion}</p>
+</div>
+
+    </div>
+  `;
     }
 
     // ===============================
@@ -487,13 +525,40 @@ async function initializeCesium() {
       const terreno = pickedObject.id.terreno;
 
       document.getElementById("infoModalLabel").innerText = terreno.nombre;
+
       document.getElementById("modal-body-content").innerHTML = `
-      <p><strong>Precio:</strong> ${terreno.precio}</p>
-      <p><strong>Área:</strong> ${terreno.area}</p>
-      <p><strong>Tipo:</strong> ${terreno.tipo}</p>
-      <p><strong>Estado:</strong> ${terreno.estado}</p>
-      <p>${terreno.descripcion}</p>
-    `;
+    <div class="modal-layout">
+
+      <div class="modal-images">
+        <img src="https://via.placeholder.com/900x500?text=Terreno"
+             style="width:100%; height:460px; object-fit:cover; border-radius:14px;">
+      </div>
+
+      <div class="modal-info">
+
+  <div class="precio-destacado">${terreno.precio}</div>
+
+  <div class="info-grid">
+    <div class="info-item">
+      <i class="bi bi-bounding-box"></i>
+      <span>${terreno.area}</span>
+    </div>
+
+    <div class="info-item">
+      <i class="bi bi-tree"></i>
+      <span>${terreno.tipo}</span>
+    </div>
+
+    <div class="info-item">
+      <i class="bi bi-tag"></i>
+      <span>${terreno.estado}</span>
+    </div>
+  </div>
+
+  <hr>
+  <p>${terreno.descripcion}</p>
+</div>
+  `;
     }
 
     const myModal = new bootstrap.Modal(document.getElementById("infoModal"));
