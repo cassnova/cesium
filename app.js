@@ -2,16 +2,19 @@
 Cesium.Ion.defaultAccessToken =
   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI3OWM4ZDZkZC1kNGJiLTQ0ZmYtYWY5YS0yOTkxYmMwZWEzNzgiLCJpZCI6MTQzMzQ5LCJpYXQiOjE2ODU1ODMyNTF9.XCbRaWuxPduSbJV50pLfEs8hW9BQbvnIgvFWlgu0llE";
 
+let viewer;
+
 // Función para inicializar Cesium
 async function initializeCesium() {
   // Inicializa el visor de Cesium
-  const viewer = new Cesium.Viewer("cesiumContainer", {
+  viewer = new Cesium.Viewer("cesiumContainer", {
     timeline: false,
     animation: false,
     sceneModePicker: false,
     baseLayerPicker: false,
     globe: false,
   });
+  await cargarPropiedades();
 
   // Habilita la atmósfera
   viewer.scene.skyAtmosphere.show = true;
@@ -22,24 +25,6 @@ async function initializeCesium() {
     viewer.scene.primitives.add(tileset);
   } catch (error) {
     console.log(`Error al cargar las Photorealistic 3D Tiles: ${error}`);
-  }
-
-  const pinBuilder = new Cesium.PinBuilder();
-
-  function obtenerPinPorEstado(estado) {
-    if (estado === "En venta") {
-      return pinBuilder.fromText("V", Cesium.Color.RED, 48).toDataURL();
-    }
-
-    if (estado === "Arriendo") {
-      return pinBuilder.fromText("A", Cesium.Color.BLUE, 48).toDataURL();
-    }
-
-    if (estado === "Industrial") {
-      return pinBuilder.fromText("I", Cesium.Color.GRAY, 48).toDataURL();
-    }
-
-    return pinBuilder.fromText("?", Cesium.Color.WHITE, 48).toDataURL();
   }
 
   const terrenoCentro = [
@@ -83,6 +68,7 @@ async function initializeCesium() {
 
   let entidadAnterior = null;
 
+  //CLICK
   handler.setInputAction(function (movement) {
     const pickedObject = viewer.scene.pick(movement.endPosition);
 
@@ -113,370 +99,22 @@ async function initializeCesium() {
     entidadAnterior = entidad;
   }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
-  // Arreglo de propiedades
-  const propiedades = [
-    {
-      id: 1,
-      nombre: "Departamento Santiago Centro",
-      direccion: "Alameda 1112, Santiago, Chile",
-      longitud: -70.65172,
-      latitud: -33.44468,
-      altura: 617,
-      imagenes: [
-        "./imagenes/alameda1112/alameda1112-1.jpg",
-        "./imagenes/alameda1112/alameda1112-2.jpg",
-        "./imagenes/alameda1112/alameda1112-3.jpg",
-      ],
-      descripcion:
-        "Departamento moderno en el corazón de la ciudad, con fácil acceso a transporte y servicios.",
-      precio: "$150,000",
-      habitaciones: 3,
-      baños: 2,
-      area: "120 m²",
-      tipo: "Departamento",
-      estado: "En venta",
-    },
-
-    {
-      id: 2,
-      nombre: "Departamento Santiago Centro",
-      direccion: "Alameda 1112, Santiago, Chile",
-      longitud: -70.6505,
-      latitud: -33.4451,
-      altura: 617,
-      imagenes: [
-        "./imagenes/alameda1112/alameda1112-1.jpg",
-        "./imagenes/alameda1112/alameda1112-2.jpg",
-        "./imagenes/alameda1112/alameda1112-3.jpg",
-      ],
-      descripcion:
-        "Departamento moderno en el corazón de la ciudad, con fácil acceso a transporte y servicios.",
-      precio: "$150,000",
-      habitaciones: 3,
-      baños: 2,
-      area: "120 m²",
-      tipo: "Departamento",
-      estado: "En venta",
-    },
-
-    {
-      id: 3,
-      nombre: "Departamento Santiago Centro",
-      direccion: "Alameda 1112, Santiago, Chile",
-      longitud: -70.6498,
-      latitud: -33.4442,
-      altura: 617,
-      imagenes: [
-        "./imagenes/alameda1112/alameda1112-1.jpg",
-        "./imagenes/alameda1112/alameda1112-2.jpg",
-        "./imagenes/alameda1112/alameda1112-3.jpg",
-      ],
-      descripcion:
-        "Departamento moderno en el corazón de la ciudad, con fácil acceso a transporte y servicios.",
-      precio: "$150,000",
-      habitaciones: 3,
-      baños: 2,
-      area: "120 m²",
-      tipo: "Departamento",
-      estado: "En venta",
-    },
-
-    {
-      id: 4,
-      nombre: "Departamento Santiago Centro",
-      direccion: "Alameda 1112, Santiago, Chile",
-      longitud: -70.6523,
-      latitud: -33.4439,
-      altura: 617,
-      imagenes: [
-        "./imagenes/alameda1112/alameda1112-1.jpg",
-        "./imagenes/alameda1112/alameda1112-2.jpg",
-        "./imagenes/alameda1112/alameda1112-3.jpg",
-      ],
-      descripcion:
-        "Departamento moderno en el corazón de la ciudad, con fácil acceso a transporte y servicios.",
-      precio: "$150,000",
-      habitaciones: 3,
-      baños: 2,
-      area: "120 m²",
-      tipo: "Departamento",
-      estado: "En venta",
-    },
-
-    {
-      id: 5,
-      nombre: "Departamento Santiago Centro",
-      direccion: "Alameda 1112, Santiago, Chile",
-      longitud: -70.6531,
-      latitud: -33.4458,
-      altura: 617,
-      imagenes: [
-        "./imagenes/alameda1112/alameda1112-1.jpg",
-        "./imagenes/alameda1112/alameda1112-2.jpg",
-        "./imagenes/alameda1112/alameda1112-3.jpg",
-      ],
-      descripcion:
-        "Departamento moderno en el corazón de la ciudad, con fácil acceso a transporte y servicios.",
-      precio: "$150,000",
-      habitaciones: 3,
-      baños: 2,
-      area: "120 m²",
-      tipo: "Departamento",
-      estado: "Arriendo",
-    },
-
-    {
-      id: 6,
-      nombre: "Departamento Santiago Centro",
-      direccion: "Alameda 1112, Santiago, Chile",
-      longitud: -70.6419,
-      latitud: -33.4372,
-      altura: 617,
-      imagenes: [
-        "./imagenes/alameda1112/alameda1112-1.jpg",
-        "./imagenes/alameda1112/alameda1112-2.jpg",
-        "./imagenes/alameda1112/alameda1112-3.jpg",
-      ],
-      descripcion:
-        "Departamento moderno en el corazón de la ciudad, con fácil acceso a transporte y servicios.",
-      precio: "$150,000",
-      habitaciones: 3,
-      baños: 2,
-      area: "120 m²",
-      tipo: "Departamento",
-      estado: "Arriendo",
-    },
-
-    {
-      id: 7,
-      nombre: "Departamento Santiago Centro",
-      direccion: "Alameda 1112, Santiago, Chile",
-      longitud: -70.6444,
-      latitud: -33.4416,
-      altura: 617,
-      imagenes: [
-        "./imagenes/alameda1112/alameda1112-1.jpg",
-        "./imagenes/alameda1112/alameda1112-2.jpg",
-        "./imagenes/alameda1112/alameda1112-3.jpg",
-      ],
-      descripcion:
-        "Departamento moderno en el corazón de la ciudad, con fácil acceso a transporte y servicios.",
-      precio: "$150,000",
-      habitaciones: 3,
-      baños: 2,
-      area: "120 m²",
-      tipo: "Departamento",
-      estado: "Arriendo",
-    },
-
-    {
-      id: 8,
-      nombre: "Casa La Reina",
-      direccion: "La Reina, Santiago",
-      longitud: -70.5451,
-      latitud: -33.4403,
-      altura: 670,
-      imagenes: [
-        "./imagenes/lareina/lareina-1.jpg",
-        "./imagenes/lareina/lareina-2.jpg",
-      ],
-      descripcion: "Casa amplia en barrio residencial",
-      precio: "$320,000",
-      habitaciones: 4,
-      baños: 3,
-      area: "180 m²",
-      tipo: "Casa",
-      estado: "Arriendo",
-    },
-
-    {
-      id: 9,
-      nombre: "Depto Ñuñoa",
-      direccion: "Ñuñoa, Santiago",
-      longitud: -70.5994,
-      latitud: -33.4569,
-      altura: 620,
-      imagenes: [],
-      descripcion: "Excelente conectividad",
-      precio: "$180,000",
-      habitaciones: 2,
-      baños: 2,
-      area: "85 m²",
-      tipo: "Departamento",
-      estado: "En venta",
-    },
-
-    {
-      id: 10,
-      nombre: "Depto Ñuñoa",
-      direccion: "Ñuñoa, Santiago",
-      longitud: -70.6451,
-      latitud: -33.4423,
-      altura: 620,
-      imagenes: [],
-      descripcion: "Excelente conectividad",
-      precio: "$180,000",
-      habitaciones: 2,
-      baños: 2,
-      area: "85 m²",
-      tipo: "Departamento",
-      estado: "En venta",
-    },
-
-    {
-      id: 11,
-      nombre: "Depto Ñuñoa",
-      direccion: "Ñuñoa, Santiago",
-      longitud: -70.6462,
-      latitud: -33.4431,
-      altura: 620,
-      imagenes: [],
-      descripcion: "Excelente conectividad",
-      precio: "$180,000",
-      habitaciones: 2,
-      baños: 2,
-      area: "85 m²",
-      tipo: "Departamento",
-      estado: "En venta",
-    },
-
-    {
-      id: 12,
-      nombre: "Depto Ñuñoa",
-      direccion: "Ñuñoa, Santiago",
-      longitud: -70.6435,
-      latitud: -33.439,
-      altura: 620,
-      imagenes: [],
-      descripcion: "Excelente conectividad",
-      precio: "$180,000",
-      habitaciones: 2,
-      baños: 2,
-      area: "85 m²",
-      tipo: "Departamento",
-      estado: "En venta",
-    },
-
-    {
-      id: 13,
-      nombre: "Depto Ñuñoa",
-      direccion: "Ñuñoa, Santiago",
-      longitud: -70.6591,
-      latitud: -33.4418,
-      altura: 620,
-      imagenes: [],
-      descripcion: "Excelente conectividad",
-      precio: "$180,000",
-      habitaciones: 2,
-      baños: 2,
-      area: "85 m²",
-      tipo: "Departamento",
-      estado: "En venta",
-    },
-
-    {
-      id: 14,
-      nombre: "Depto Ñuñoa",
-      direccion: "Ñuñoa, Santiago",
-      longitud: -70.66,
-      latitud: -33.4427,
-      altura: 620,
-      imagenes: [],
-      descripcion: "Excelente conectividad",
-      precio: "$180,000",
-      habitaciones: 2,
-      baños: 2,
-      area: "85 m²",
-      tipo: "Departamento",
-      estado: "En venta",
-    },
-
-    {
-      id: 15,
-      nombre: "Depto Ñuñoa",
-      direccion: "Ñuñoa, Santiago",
-      longitud: -70.6584,
-      latitud: -33.4435,
-      altura: 620,
-      imagenes: [],
-      descripcion: "Excelente conectividad",
-      precio: "$180,000",
-      habitaciones: 2,
-      baños: 2,
-      area: "85 m²",
-      tipo: "Departamento",
-      estado: "En venta",
-    },
-
-    {
-      id: 16,
-      nombre: "Depto Ñuñoa",
-      direccion: "Ñuñoa, Santiago",
-      longitud: -70.6509,
-      latitud: -33.4512,
-      altura: 620,
-      imagenes: [],
-      descripcion: "Excelente conectividad",
-      precio: "$180,000",
-      habitaciones: 2,
-      baños: 2,
-      area: "85 m²",
-      tipo: "Departamento",
-      estado: "En venta",
-    },
-
-    {
-      id: 17,
-      nombre: "Depto Ñuñoa",
-      direccion: "Ñuñoa, Santiago",
-      longitud: -70.6517,
-      latitud: -33.452,
-      altura: 620,
-      imagenes: [],
-      descripcion: "Excelente conectividad",
-      precio: "$180,000",
-      habitaciones: 2,
-      baños: 2,
-      area: "85 m²",
-      tipo: "Departamento",
-      estado: "En venta",
-    },
-
-    {
-      id: 18,
-      nombre: "Depto Ñuñoa",
-      direccion: "Ñuñoa, Santiago",
-      longitud: -70.6498,
-      latitud: -33.4504,
-      altura: 620,
-      imagenes: [],
-      descripcion: "Excelente conectividad",
-      precio: "$180,000",
-      habitaciones: 2,
-      baños: 2,
-      area: "85 m²",
-      tipo: "Departamento",
-      estado: "En venta",
-    },
-    // Puedes agregar más propiedades según sea necesario
-  ];
-
   // Itera sobre el arreglo de propiedades y agrega un marcador para cada una
-  propiedades.forEach((propiedad) => {
-    viewer.entities.add({
-      position: Cesium.Cartesian3.fromDegrees(
-        propiedad.longitud,
-        propiedad.latitud,
-        propiedad.altura,
-      ),
-      billboard: {
-        image: obtenerPinPorEstado(propiedad.estado),
-        verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
-      },
-      id: `propiedad-${propiedad.id}`,
-      propiedad: propiedad, // Adjunta la información de la propiedad usando una propiedad personalizada
-    });
-  });
+  // propiedades.forEach((propiedad) => {
+  //   viewer.entities.add({
+  //     position: Cesium.Cartesian3.fromDegrees(
+  //       propiedad.longitud,
+  //       propiedad.latitud,
+  //       propiedad.altura,
+  //     ),
+  //     billboard: {
+  //       image: obtenerPinPorEstado(propiedad.estado),
+  //       verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+  //     },
+  //     id: `propiedad-${propiedad.id}`,
+  //     propiedad: propiedad, // Adjunta la información de la propiedad usando una propiedad personalizada
+  //   });
+  // });
 
   // Manejador de eventos para clics en los marcadores
   handler.setInputAction(function (movement) {
@@ -708,5 +346,47 @@ async function initializeCesium() {
   }
 }
 
+const pinBuilder = new Cesium.PinBuilder();
+
+function obtenerPinPorEstado(estado) {
+  if (estado === "En venta") {
+    return pinBuilder.fromText("V", Cesium.Color.RED, 48).toDataURL();
+  }
+
+  if (estado === "Arriendo") {
+    return pinBuilder.fromText("A", Cesium.Color.BLUE, 48).toDataURL();
+  }
+
+  if (estado === "Industrial") {
+    return pinBuilder.fromText("I", Cesium.Color.GRAY, 48).toDataURL();
+  }
+
+  return pinBuilder.fromText("?", Cesium.Color.WHITE, 48).toDataURL();
+}
+
+async function cargarPropiedades() {
+  const response = await fetch("propiedades.json");
+  const propiedades = await response.json();
+
+  console.log(propiedades);
+
+  propiedades.forEach((propiedad) => {
+    viewer.entities.add({
+      position: Cesium.Cartesian3.fromDegrees(
+        propiedad.longitud,
+        propiedad.latitud,
+        propiedad.altura,
+      ),
+      billboard: {
+        image: obtenerPinPorEstado(propiedad.estado),
+        verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
+      },
+      id: `propiedad-${propiedad.id}`,
+      propiedad: propiedad,
+    });
+  });
+}
+
 // Llama a la función para inicializar Cesium
 initializeCesium();
+cargarPropiedades();

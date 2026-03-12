@@ -1,0 +1,177 @@
+[
+  {
+    "id": 1,
+    "nombre": "Departamento Santiago Centro",
+    "direccion": "Alameda 1112, Santiago, Chile",
+    "longitud": -70.65172,
+    "latitud": -33.44468,
+    "altura": 617,
+    "imagenes": [
+      "./imagenes/alameda1112/alameda1112-1.jpg",
+      "./imagenes/alameda1112/alameda1112-2.jpg",
+      "./imagenes/alameda1112/alameda1112-3.jpg"
+    ],
+    "descripcion": "Departamento moderno en el corazón de la ciudad, con fácil acceso a transporte y servicios.",
+    "precio": "$150,000",
+    "habitaciones": 3,
+    "baños": 2,
+    "area": "120 m²",
+    "tipo": "Departamento",
+    "estado": "En venta"
+  },
+  {
+    "id": 2,
+    "nombre": "Departamento Santiago Centro",
+    "direccion": "Alameda 1112, Santiago, Chile",
+    "longitud": -70.6505,
+    "latitud": -33.4451,
+    "altura": 617,
+    "imagenes": [
+      "./imagenes/alameda1112/alameda1112-1.jpg",
+      "./imagenes/alameda1112/alameda1112-2.jpg",
+      "./imagenes/alameda1112/alameda1112-3.jpg"
+    ],
+    "descripcion": "Departamento moderno en el corazón de la ciudad, con fácil acceso a transporte y servicios.",
+    "precio": "$150,000",
+    "habitaciones": 3,
+    "baños": 2,
+    "area": "120 m²",
+    "tipo": "Departamento",
+    "estado": "En venta"
+  },
+  {
+    "id": 3,
+    "nombre": "Departamento Santiago Centro",
+    "direccion": "Alameda 1112, Santiago, Chile",
+    "longitud": -70.6498,
+    "latitud": -33.4442,
+    "altura": 617,
+    "imagenes": [
+      "./imagenes/alameda1112/alameda1112-1.jpg",
+      "./imagenes/alameda1112/alameda1112-2.jpg",
+      "./imagenes/alameda1112/alameda1112-3.jpg"
+    ],
+    "descripcion": "Departamento moderno en el corazón de la ciudad, con fácil acceso a transporte y servicios.",
+    "precio": "$150,000",
+    "habitaciones": 3,
+    "baños": 2,
+    "area": "120 m²",
+    "tipo": "Departamento",
+    "estado": "En venta"
+  },
+  {
+    "id": 4,
+    "nombre": "Departamento Santiago Centro",
+    "direccion": "Alameda 1112, Santiago, Chile",
+    "longitud": -70.6523,
+    "latitud": -33.4439,
+    "altura": 617,
+    "imagenes": [
+      "./imagenes/alameda1112/alameda1112-1.jpg",
+      "./imagenes/alameda1112/alameda1112-2.jpg",
+      "./imagenes/alameda1112/alameda1112-3.jpg"
+    ],
+    "descripcion": "Departamento moderno en el corazón de la ciudad, con fácil acceso a transporte y servicios.",
+    "precio": "$150,000",
+    "habitaciones": 3,
+    "baños": 2,
+    "area": "120 m²",
+    "tipo": "Departamento",
+    "estado": "En venta"
+  },
+  {
+    "id": 5,
+    "nombre": "Departamento Santiago Centro",
+    "direccion": "Alameda 1112, Santiago, Chile",
+    "longitud": -70.6531,
+    "latitud": -33.4458,
+    "altura": 617,
+    "imagenes": [
+      "./imagenes/alameda1112/alameda1112-1.jpg",
+      "./imagenes/alameda1112/alameda1112-2.jpg",
+      "./imagenes/alameda1112/alameda1112-3.jpg"
+    ],
+    "descripcion": "Departamento moderno en el corazón de la ciudad, con fácil acceso a transporte y servicios.",
+    "precio": "$150,000",
+    "habitaciones": 3,
+    "baños": 2,
+    "area": "120 m²",
+    "tipo": "Departamento",
+    "estado": "Arriendo"
+  },
+  {
+    "id": 6,
+    "nombre": "Departamento Santiago Centro",
+    "direccion": "Alameda 1112, Santiago, Chile",
+    "longitud": -70.6419,
+    "latitud": -33.4372,
+    "altura": 617,
+    "imagenes": [
+      "./imagenes/alameda1112/alameda1112-1.jpg",
+      "./imagenes/alameda1112/alameda1112-2.jpg",
+      "./imagenes/alameda1112/alameda1112-3.jpg"
+    ],
+    "descripcion": "Departamento moderno en el corazón de la ciudad, con fácil acceso a transporte y servicios.",
+    "precio": "$150,000",
+    "habitaciones": 3,
+    "baños": 2,
+    "area": "120 m²",
+    "tipo": "Departamento",
+    "estado": "Arriendo"
+  },
+  {
+    "id": 7,
+    "nombre": "Departamento Santiago Centro",
+    "direccion": "Alameda 1112, Santiago, Chile",
+    "longitud": -70.6444,
+    "latitud": -33.4416,
+    "altura": 617,
+    "imagenes": [
+      "./imagenes/alameda1112/alameda1112-1.jpg",
+      "./imagenes/alameda1112/alameda1112-2.jpg",
+      "./imagenes/alameda1112/alameda1112-3.jpg"
+    ],
+    "descripcion": "Departamento moderno en el corazón de la ciudad, con fácil acceso a transporte y servicios.",
+    "precio": "$150,000",
+    "habitaciones": 3,
+    "baños": 2,
+    "area": "120 m²",
+    "tipo": "Departamento",
+    "estado": "Arriendo"
+  },
+  {
+    "id": 8,
+    "nombre": "Casa La Reina",
+    "direccion": "La Reina, Santiago",
+    "longitud": -70.5451,
+    "latitud": -33.4403,
+    "altura": 670,
+    "imagenes": [
+      "./imagenes/lareina/lareina-1.jpg",
+      "./imagenes/lareina/lareina-2.jpg"
+    ],
+    "descripcion": "Casa amplia en barrio residencial",
+    "precio": "$320,000",
+    "habitaciones": 4,
+    "baños": 3,
+    "area": "180 m²",
+    "tipo": "Casa",
+    "estado": "Arriendo"
+  },
+  {
+    "id": 9,
+    "nombre": "Depto Ñuñoa",
+    "direccion": "Ñuñoa, Santiago",
+    "longitud": -70.5994,
+    "latitud": -33.4569,
+    "altura": 620,
+    "imagenes": [],
+    "descripcion": "Excelente conectividad",
+    "precio": "$180,000",
+    "habitaciones": 2,
+    "baños": 2,
+    "area": "85 m²",
+    "tipo": "Departamento",
+    "estado": "En venta"
+  }
+]
