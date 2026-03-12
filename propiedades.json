@@ -173,5 +173,21 @@
     "area": "85 m²",
     "tipo": "Departamento",
     "estado": "En venta"
+  },
+  {
+    "id": 10,
+    "nombre": "Depto. Las Condes",
+    "direccion": "Ing. Pedro Blanquier 6200",
+    "longitud": -70.5635,
+    "latitud": -33.4239,
+    "altura": 715,
+    "imagenes": [],
+    "descripcion": "Ubicada en un sector estratégico con excelente conectividad y cercanía a comercios, transporte público y servicios esenciales.",
+    "precio": "13.900 UF",
+    "habitaciones": 4,
+    "baños": 4,
+    "area": "140 m²",
+    "tipo": "Departamento",
+    "estado": "En venta"
   }
 ]
