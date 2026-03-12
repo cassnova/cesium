@@ -24,6 +24,24 @@ async function initializeCesium() {
     console.log(`Error al cargar las Photorealistic 3D Tiles: ${error}`);
   }
 
+  const pinBuilder = new Cesium.PinBuilder();
+
+  function obtenerPinPorEstado(estado) {
+    if (estado === "En venta") {
+      return pinBuilder.fromText("V", Cesium.Color.RED, 48).toDataURL();
+    }
+
+    if (estado === "Arriendo") {
+      return pinBuilder.fromText("A", Cesium.Color.BLUE, 48).toDataURL();
+    }
+
+    if (estado === "Industrial") {
+      return pinBuilder.fromText("I", Cesium.Color.GRAY, 48).toDataURL();
+    }
+
+    return pinBuilder.fromText("?", Cesium.Color.WHITE, 48).toDataURL();
+  }
+
   const terrenoCentro = [
     -70.64610786283637, -33.44585019035611, 600, -70.64557301936131,
     -33.44569668352337, 600, -70.64548198217405, -33.44599261913323, 600,
@@ -62,6 +80,38 @@ async function initializeCesium() {
 
   // Declarar el manejador de eventos
   const handler = new Cesium.ScreenSpaceEventHandler(viewer.scene.canvas);
+
+  let entidadAnterior = null;
+
+  handler.setInputAction(function (movement) {
+    const pickedObject = viewer.scene.pick(movement.endPosition);
+
+    if (!Cesium.defined(pickedObject) || !pickedObject.id) {
+      if (entidadAnterior && entidadAnterior.billboard) {
+        entidadAnterior.billboard.scale = 1.0;
+      }
+
+      entidadAnterior = null;
+      return;
+    }
+
+    const entidad = pickedObject.id;
+
+    // SOLO si tiene billboard (markers)
+    if (!entidad.billboard) return;
+
+    if (
+      entidadAnterior &&
+      entidadAnterior !== entidad &&
+      entidadAnterior.billboard
+    ) {
+      entidadAnterior.billboard.scale = 1.0;
+    }
+
+    entidad.billboard.scale = 1.3;
+
+    entidadAnterior = entidad;
+  }, Cesium.ScreenSpaceEventType.MOUSE_MOVE);
 
   // Arreglo de propiedades
   const propiedades = [
@@ -420,9 +470,7 @@ async function initializeCesium() {
         propiedad.altura,
       ),
       billboard: {
-        image: obtenerIconoPorEstado(propiedad.estado),
-        width: 36,
-        height: 36,
+        image: obtenerPinPorEstado(propiedad.estado),
         verticalOrigin: Cesium.VerticalOrigin.BOTTOM,
       },
       id: `propiedad-${propiedad.id}`,
